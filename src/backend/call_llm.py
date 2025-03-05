@@ -1,5 +1,5 @@
-import requests
 import json
+import lmstudio as lms
 
 # The following is meant to resolve any import issues. It's not ↵
 # important for the project:
@@ -11,32 +11,34 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from src.config import SERVER_URL
+from src.config import MODEL
 
 ## STRUCTURED OUTPUT ---------------------------------------------------
 # A structured output is used. These settings are configured manually ↵
 # in LM studio:
 
-# {
-#   "type": "object",
-#   "properties": {
-#     "score": {
-#       "type": "integer",
-#       "description": "Score assigned to this response"
-#     },
-#     "explanation": {
-#       "type": "string",
-#       "description": "Breakdown of each rubric component"
-#     }
-#   },
-#   "required": [
-#     "score",
-#     "explanation"
-#   ]
-# }
+schema = {
+  "type": "object",
+  "properties": {
+    "score": {
+      "type": "integer",
+      "description": "Score assigned to this response"
+    },
+    "explanation": {
+      "type": "string",
+      "description": "Breakdown of each rubric component"
+    }
+  },
+  "required": [
+    "score",
+    "explanation"
+  ]
+}
 
 ## SYSTEM PROMPT -------------------------------------------------------
-# This is an example system prompt:
+# This is an example system prompt. The ↵
+# Autograder._generate_system_prompt() method converts a list of ↵
+# tuples provided by the user into the prompt format below:
 
 # Evaluate if the student's response meets each rubric criterion:
 
@@ -54,8 +56,7 @@ from src.config import SERVER_URL
 
 class Autograder:
 
-    def __init__(self, server_url = SERVER_URL):
-        self.server_url = server_url
+    def __init__(self):
         self.rubric_components = []
     
     def set_rubric(self, components):
@@ -98,39 +99,18 @@ class Autograder:
         
         system_prompt = self._generate_system_prompt()
 
-        data = {
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": student_response}
-            ]
-        }
+        with lms.Client() as client:
 
-        headers = {
-            "Content-Type": "application/json"
-        }
+            model = client.llm.model(MODEL)
 
-        try:
-            r = requests.post(self.server_url, headers=headers, json=data)
-            r.raise_for_status()
+            prompt = lms.Chat(system_prompt)
+            prompt.add_user_message(student_response)
 
-            # This is where we should implement debug/error logs in the future.
-
-            response_data = r.json()
-            content = response_data.get("choices", [{}])[0].get("message", {}).get("content", "")
-
-            try:
-                result = json.loads(content)
-                return result
-            except json.JSONDecodeError:
-                return {
-                    "error": "Failed to parse LLM response as JSON",
-                    "raw_response": content
-                }
-            
-        except requests.exceptions.RequestException as e:
-            return {
-                "error": f"API call failed: {str(e)}",
-            }
+            response = model.respond(prompt, config={
+                "temperature": 0.6,
+            })
+        
+        return response
 
 if __name__ == "__main__":
 

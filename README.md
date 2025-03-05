@@ -6,7 +6,5 @@ This project ensures privacy by running completely offline, and is designed to p
 
 ### Requirements
 * Python 3.13
+* LM Studio (we will be performing API calls to a locally hosted server, interfaced by LM Studio)
 * Dependencies listed in `pyproject.toml`
-
-### Directory structure
-
