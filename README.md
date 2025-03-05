@@ -7,3 +7,6 @@ This project ensures privacy by running completely offline, and is designed to p
 ### Requirements
 * Python 3.13
 * Dependencies listed in `pyproject.toml`
+
+### Directory structure
+

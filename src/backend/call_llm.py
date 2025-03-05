@@ -1,6 +1,17 @@
-# This is for API calls to LM Studio, where our model is hosted locally.
+import requests
+import json
 
-server = "http://127.0.0.1:1234/v1/chat/completions"
+# The following is meant to resolve any import issues. It's not ↵
+# important for the project:
+
+import os
+import sys
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+from src.config import SERVER_URL
 
 ## STRUCTURED OUTPUT ---------------------------------------------------
 # A structured output is used. These settings are configured manually ↵
@@ -41,12 +52,9 @@ server = "http://127.0.0.1:1234/v1/chat/completions"
 # 'explanation': (brief analysis with key points met/missed)
 # }
 
-import requests
-import json
-
 class Autograder:
 
-    def __init__(self, server_url):
+    def __init__(self, server_url = SERVER_URL):
         self.server_url = server_url
         self.rubric_components = []
     
@@ -126,7 +134,7 @@ class Autograder:
 
 if __name__ == "__main__":
 
-    autograder = Autograder(server)
+    autograder = Autograder()
 
     autograder.set_rubric([
         ("Resample from data", 1),
