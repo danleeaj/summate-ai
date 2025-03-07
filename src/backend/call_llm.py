@@ -11,7 +11,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from src.config import MODEL
+from src.config import MODEL, TEMPERATURE
 
 ## STRUCTURED OUTPUT ---------------------------------------------------
 # A structured output is used. These settings are configured manually ↵
@@ -26,7 +26,7 @@ schema = {
     },
     "explanation": {
       "type": "string",
-      "description": "Breakdown of each rubric component"
+      "description": "Explanation for why each of the points were given or were not given."
     }
   },
   "required": [
@@ -56,8 +56,9 @@ schema = {
 
 class Autograder:
 
-    def __init__(self):
+    def __init__(self, temperature: float = TEMPERATURE):
         self.rubric_components = []
+        self.temperature = temperature
     
     def set_rubric(self, components):
         """Set rubric components for evaluation.
@@ -77,8 +78,8 @@ class Autograder:
         prompt += """
         Return in JSON:
         {
-        'score': (total points 0-5),
         'explanation': (brief analysis with key points met/missed)
+        'score': (total points 0-5),
         }
         """
 
@@ -107,7 +108,7 @@ class Autograder:
             prompt.add_user_message(student_response)
 
             response = model.respond(prompt, config={
-                "temperature": 0.6,
+                "temperature": self.temperature,
             })
         
         return response
@@ -130,4 +131,5 @@ if __name__ == "__main__":
 
     result = autograder.evaluate(student_response)
 
-    print(json.dumps(result, indent=2))
+    print(result.content)
+    print(result.stats)

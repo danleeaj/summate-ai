@@ -4,3 +4,10 @@
 # using it.
 
 MODEL = "meta-llama-3.1-8b-instruct"
+
+## MODEL PARAMTERS
+# These are the default model parameters. When initializing an
+# autograder class, the parameters that are not specified
+# will default to these values.
+
+TEMPERATURE = 0.8
