@@ -1,5 +1,7 @@
+# This is temporary!
+
 def main():
-    print("This is summate_ai!")
+    print("Hello, this is Summate AI!")
 
 if __name__ == "__main__":
     main()
