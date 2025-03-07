@@ -1,4 +1,3 @@
-import json
 import lmstudio as lms
 
 # The following is meant to resolve any import issues. It's not ↵
