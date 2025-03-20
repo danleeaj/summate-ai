@@ -1,9 +1,5 @@
-from langchain_ollama import OllamaLLM
-from langchain_core.prompts.prompt import PromptTemplate
-from typing import Optional
-
-# The following is meant to resolve any import issues. It's not ↵
-# important for the project:
+# The following is meant to resolve any import issues. It's not ↵ =================================
+# important for the project: ======================================================================
 
 import os
 import sys
@@ -11,6 +7,12 @@ import sys
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
+
+# =================================================================================================
+
+from langchain_ollama import OllamaLLM
+from langchain_core.prompts.prompt import PromptTemplate
+from typing import Optional
 
 from src.config import MODEL, TEMPERATURE, PROMPT_TEMPLATE
 
