@@ -5,7 +5,6 @@ description = "An rubric-based autograding framework for natural language studen
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "icecream>=2.1.4",
     "langchain-ollama>=0.2.3",
     "ollama>=0.4.7",
 ]
