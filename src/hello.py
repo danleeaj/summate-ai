@@ -1,7 +1,16 @@
-# This is temporary!
+from langchain_core.prompts.prompt import PromptTemplate
+from config import PROMPT_TEMPLATE
 
-def main():
-    print("Hello, this is Summate AI!")
+test_template = "What's the distance between {here} and {there}?"
+prompt = PromptTemplate.from_template(test_template)
 
-if __name__ == "__main__":
-    main()
+prompt = prompt.partial(here="Singapore")
+prompt = prompt.partial(here="California")
+
+output = prompt.format(there="China")
+output = prompt.format(there="Singapore")
+
+print(output)
+
+# prompt.format(rubric_components="==COMPONENT==", student_response="==STUDENT==")
+# print(prompt)
