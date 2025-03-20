@@ -17,18 +17,40 @@ Try the autograder out at `src/hello.py`. Replace the rubric components as a lis
 from backend.call_llm import Autograder
 from config import MODEL
 
+# We initialize the model
 autograder = Autograder(llm_model=MODEL)
 
+# Then we update the rubric
 autograder.set_rubric([
     ("States that p-value is less than 0.05", 1),
     ("States that the null hypothesis is rejected", 1),
 ])
 
+# We can optionally update the temperature. This will default to whatever the temperature is set at in config.py
+autograder.set_temperature(0.5)
+
 student_response = """
 A p-value of 0.03 means that the alternative hypothesis is rejected, and the null is accepted.
 """
 
-print(autograder.evaluate(student_response))
+# We can now ask the autograder to grade a student response.
+# This student seems to have confused the null with the alternative hypothesis.
+evaluation = autograder.evaluate(student_response)
+print(evaluation)
+```
+
+This outputs:
+
+```
+# CRITERION: States that p-value is less than 0.05
+EXPLANATION: The student's response does not meet this criterion because they state that the alternative hypothesis is rejected when the p-value is 0.03, which implies the null hypothesis is true (since it doesn't indicate a significant result). However, this misunderstanding of how to interpret results can be seen as failing to directly address whether the p-value is less than 0.05.
+SCORE: 0/1
+
+# CRITERION: States that the null hypothesis is rejected
+EXPLANATION: The student's response does not meet this criterion because they state that the alternative hypothesis is rejected, and the null is accepted when a p-value of 0.03 is obtained. This shows confusion about how to interpret the results in relation to rejecting or accepting the null hypothesis.
+SCORE: 0/1
+
+# TOTAL_SCORE: 0/2
 ```
 
 ### Setup
