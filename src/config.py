@@ -15,22 +15,6 @@ TEMPERATURE = 0.8
 ## PROMPT TEMPLATES ===============================================================================
 # These are the templates used for generating the prompt.
 
-# PROMPT_TEMPLATE = """
-# Evaluate if the student's response meets each rubric criterion.
-# ## RUBRIC COMPONENTS
-# {rubric_components}
-# ## STUDENT RESPONSE
-# {student_response}
-# Return in JSON:
-# {{
-#     \"explanation\": (brief analysis with key points met/missed),
-#     \"score\": (total points 0-5)
-# }}
-# Response:
-# {{
-#     \"explanation\": \"
-# """
-
 PROMPT_TEMPLATE = """
 ### Instruction:
 Evaluate if the student's response meets each rubric criterion.
@@ -52,6 +36,22 @@ TOTAL_SCORE: [Sum of points earned]/[Sum of points possible]
 
 ### Response:
 """
+
+# PROMPT_TEMPLATE = """
+# Evaluate if the student's response meets each rubric criterion.
+# ## RUBRIC COMPONENTS
+# {rubric_components}
+# ## STUDENT RESPONSE
+# {student_response}
+# Return in JSON:
+# {{
+#     \"explanation\": (brief analysis with key points met/missed),
+#     \"score\": (total points 0-5)
+# }}
+# Response:
+# {{
+#     \"explanation\": \"
+# """
 
 # An example of what this would return would be the following:
 
