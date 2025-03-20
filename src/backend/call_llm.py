@@ -1,15 +1,3 @@
-# The following is meant to resolve any import issues. It's not ↵ =================================
-# important for the project: ======================================================================
-
-import os
-import sys
-
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-
-# =================================================================================================
-
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts.prompt import PromptTemplate
 from typing import Optional
@@ -63,11 +51,11 @@ class Autograder:
         else:
             self.temperature = temperature
     
-    def evaluate(self, student_response):
+    def evaluate(self, response):
         """Evaluate a student response based on rubric set using set_rubric method.
 
         Args:
-            student_response (str): A string containing the student response
+            response (str): A string containing the student response
 
         Returns:
             Dictionary with evaluation results
@@ -76,11 +64,11 @@ class Autograder:
         if not self.rubric_components:
             return {"error": "Rubric components are not set. Use set_rubric method first to set the rubrics."}
 
-        self.prompt = self.prompt.format_prompt(student_response=student_response)
+        self.prompt = self.prompt.format_prompt(student_response=response)
 
-        response = self.model.invoke(self.prompt)
+        output = self.model.invoke(self.prompt)
         
-        return response
+        return output
 
 if __name__ == "__main__":
 
