@@ -10,13 +10,14 @@ This project ensures privacy by running completely offline, and is designed to p
 * Dependencies listed in `pyproject.toml`
 
 ### Setup
-1. Download and install Ollama.
-2. Check that installation is successful by checking version.
+1. Download and install [Ollama](https://ollama.com/)
+2. Check that installation is successful by checking version
 ```cli
 ollama --version
 ```
-3. Pull model. We recommend pulling `llama3.1:8b`:
+3. Pull model (browse through all the models at your disposal [here](https://ollama.com/search)). We recommend pulling `llama3.1:8b`:
 ```cli
 ollama pull llama3.1:8b
 ```
-4. Success!
+4. (Optional) If you pulled another model, update the `MODEL` constant in `src/config.py`
+5. Success!
