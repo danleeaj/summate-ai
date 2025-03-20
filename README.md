@@ -21,3 +21,7 @@ ollama pull llama3.1:8b
 ```
 4. (Optional) If you pulled another model, update the `MODEL` constant in `src/config.py`
 5. Success!
+
+### Trying it out
+
+After installation is complete, head to `src/hello.py` to try it out!

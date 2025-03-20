@@ -1,16 +1,15 @@
-from langchain_core.prompts.prompt import PromptTemplate
-from config import PROMPT_TEMPLATE
+from backend.call_llm import Autograder
+from config import MODEL
 
-test_template = "What's the distance between {here} and {there}?"
-prompt = PromptTemplate.from_template(test_template)
+autograder = Autograder(llm_model=MODEL)
 
-prompt = prompt.partial(here="Singapore")
-prompt = prompt.partial(here="California")
+autograder.set_rubric([
+    ("States that p-value is less than 0.05", 1),
+    ("States that the null hypothesis is rejected", 1),
+])
 
-output = prompt.format(there="China")
-output = prompt.format(there="Singapore")
+student_response = """
+A p-value of 0.03 means that the alternative hypothesis is rejected, and the null is accepted.
+"""
 
-print(output)
-
-# prompt.format(rubric_components="==COMPONENT==", student_response="==STUDENT==")
-# print(prompt)
+print(autograder.evaluate(student_response))
