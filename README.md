@@ -13,6 +13,8 @@ This project ensures privacy by running completely offline, and is designed to p
 
 Try the autograder out at `src/hello.py`. Replace the rubric components as a list of tuples `(component, score)`, and update the student response. Run the script! Your wait time will vary depending on how archaic your computer is.
 
+You can also try out batch grading using the code in `src/batch_grading.py`!
+
 ```python
 from backend.call_llm import Autograder
 from config import MODEL
@@ -37,6 +39,13 @@ A p-value of 0.03 means that the alternative hypothesis is rejected, and the nul
 # This student seems to have confused the null with the alternative hypothesis.
 evaluation = autograder.evaluate(student_response)
 print(evaluation)
+
+# For batch grading, we can implement a for loop like so:
+
+evaluations = []
+for i, response in enumerate(student_responses):
+    data = {'id': i, 'evaluation': autograder.evaluate(response)}
+    evaluations.append(data)
 ```
 
 This outputs:
