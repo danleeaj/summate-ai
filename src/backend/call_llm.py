@@ -1,9 +1,11 @@
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts.prompt import PromptTemplate
 from typing import Optional
+import logging
 
 from src.config import MODEL, TEMPERATURE, PROMPT_TEMPLATE
 
+# List of supported hosts
 SUPPORTED_LLM_HOSTS = ['ollama']
 
 class Autograder:
@@ -64,8 +66,15 @@ class Autograder:
         if not self.rubric_components:
             return {"error": "Rubric components are not set. Use set_rubric method first to set the rubrics."}
 
-        self.prompt = self.prompt.format_prompt(student_response=response)
+        # Here we use prompt instead of self.prompt because we don't
+        # want our formatted prompt (prompt with rubrics and question,
+        # but without student response) to be overwritten...
 
-        output = self.model.invoke(self.prompt)
+        # I think there is a better way to implement this but,
+        # I can't think of one yet.
+
+        prompt = self.prompt.format_prompt(student_response=response)
+
+        output = self.model.invoke(prompt)
         
         return output
