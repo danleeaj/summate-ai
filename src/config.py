@@ -26,15 +26,17 @@ Evaluate if the student's response meets each rubric criterion.
 
 For each rubric component:
 
-CRITERION: [Name of criterion]
-EXPLANATION: [Detailed evaluation of how the response meets or fails to meet this criterion]
-SCORE: [Points earned]/[Points possible]
+## CRITERION: [Name of criterion]
+## EXPLANATION: [Detailed evaluation of how the response meets or fails to meet this criterion]
+## SCORE: [Points earned]/[Points possible]
 
-====================
+Then, at the end:
 
-TOTAL_SCORE: [Sum of points earned]/[Sum of points possible]
+### TOTAL_SCORE: [Sum of points earned]/[Sum of points possible]
 
 ### Response:
+
+## CRITERION: 
 """
 
 # PROMPT_TEMPLATE = """
