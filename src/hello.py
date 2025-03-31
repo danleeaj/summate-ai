@@ -4,7 +4,8 @@ from config import MODEL
 def main():
 
     # We initialize the model
-    autograder = Autograder(llm_model=MODEL)
+    # Logging is defaulted to true, but can be turned off
+    autograder = Autograder(llm_model=MODEL, enable_logging=True)
 
     # Then we update the rubric
     autograder.set_rubric([
