@@ -4,6 +4,8 @@ A Python application that uses locally-run LLMs, through Ollama and LangChain, t
 
 This project ensures privacy by running completely offline, and is designed to provide consistent, objective evaluations while reducing the manual workload for educators.
 
+You can find more detailed documentation on installation and documentation [here](https://danleeaj.github.io/summate-docs).
+
 ### Requirements
 * Python 3.13
 * Ollama
