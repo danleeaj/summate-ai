@@ -6,8 +6,15 @@ dist/
 wheels/
 *.egg-info
 
+# IDE
+.idea
+
 # Virtual environments
 .venv
+
+# Documentation
+docs/
+.ipynb_checkpoints/
 
 # Logging
 *.log
